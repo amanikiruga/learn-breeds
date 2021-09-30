@@ -18,8 +18,31 @@ const MainStage = (props: MainStageProps) => {
     }, [props.dogBreed]);
 
     return (
-        <div>
-            <img src={dogImage}></img>
+        <div className="row">
+            <div className="card">
+                <div className="wrapper">
+                    <div
+                        className="card_img"
+                        style={{ backgroundImage: `url(${dogImage})` }}
+                    ></div>
+                </div>
+            </div>
+            <div className="card">
+                <div className="wrapper">
+                    <div
+                        className="card_img"
+                        style={{ backgroundImage: `url(${dogImage})` }}
+                    ></div>
+                </div>
+            </div>
+            <div className="card">
+                <div className="wrapper">
+                    <div
+                        className="card_img"
+                        style={{ backgroundImage: `url(${dogImage})` }}
+                    ></div>
+                </div>
+            </div>
         </div>
     );
 };

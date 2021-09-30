@@ -15,10 +15,13 @@ const App = () => {
                 Rottweiler
             </button>
             <button onClick={() => setDogBreed("Chihuahua")}>Chihuahua</button>
-            <MainStage
-                dogBreed={dogBreed}
-                dogBreedToQuery={DogBreeds}
-            ></MainStage>
+
+            <div>
+                <MainStage
+                    dogBreed={dogBreed}
+                    dogBreedToQuery={DogBreeds}
+                ></MainStage>
+            </div>
         </div>
     );
 };
