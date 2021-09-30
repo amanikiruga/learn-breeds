@@ -1,46 +1,56 @@
 import { useEffect, useState } from "react";
 import { DogBreeds, fetchDogImg } from "./services/DogAPI";
 type MainStageProps = {
-    dogBreed: string;
+    randomDogBreedIndex: number;
     dogBreedToQuery: { [key: string]: string };
 };
 
 const MainStage = (props: MainStageProps) => {
     const [dogImage, setDogImage] = useState("");
-    console.log(props.dogBreed);
-    console.log(props.dogBreedToQuery[props.dogBreed]);
+
+    const dogBreed =
+        props.dogBreedToQuery[
+            Object.keys(DogBreeds)[props.randomDogBreedIndex]
+        ];
+
+    console.log(dogBreed);
     useEffect(() => {
-        fetchDogImg(props.dogBreedToQuery[props.dogBreed])
+        fetchDogImg(dogBreed)
             .then((response) => setDogImage(response.message))
             .catch((err) => {
                 console.log(`We have an error in getting from API ${err}`);
             });
-    }, [props.dogBreed]);
+    }, [props.randomDogBreedIndex]);
 
     return (
-        <div className="row">
-            <div className="card">
-                <div className="wrapper">
-                    <div
-                        className="card_img"
-                        style={{ backgroundImage: `url(${dogImage})` }}
-                    ></div>
-                </div>
+        <div>
+            <div className="prompt">
+                <h2> Which picture is a {dogBreed}</h2>
             </div>
-            <div className="card">
-                <div className="wrapper">
-                    <div
-                        className="card_img"
-                        style={{ backgroundImage: `url(${dogImage})` }}
-                    ></div>
+            <div className="row">
+                <div className="card">
+                    <div className="wrapper">
+                        <div
+                            className="card_img"
+                            style={{ backgroundImage: `url(${dogImage})` }}
+                        ></div>
+                    </div>
                 </div>
-            </div>
-            <div className="card">
-                <div className="wrapper">
-                    <div
-                        className="card_img"
-                        style={{ backgroundImage: `url(${dogImage})` }}
-                    ></div>
+                <div className="card">
+                    <div className="wrapper">
+                        <div
+                            className="card_img"
+                            style={{ backgroundImage: `url(${dogImage})` }}
+                        ></div>
+                    </div>
+                </div>
+                <div className="card">
+                    <div className="wrapper">
+                        <div
+                            className="card_img"
+                            style={{ backgroundImage: `url(${dogImage})` }}
+                        ></div>
+                    </div>
                 </div>
             </div>
         </div>

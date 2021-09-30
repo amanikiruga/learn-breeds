@@ -1,8 +1,11 @@
 ## Plan 
 * Create issues on github feature tracking 
 * Find database/api for animals
-  * Write simple thing to get image 
-  * pass arguments to get specific image.
+  * ~~Write simple thing to get image~~
+  * ~~pass arguments to get specific image.~~
+  * ~~Get image from rand category.~~
+* Add card layout
+  * Add conditional border highlight on click
 * Create mockup on figma
   * game dynamic    
     * timer

@@ -6,11 +6,13 @@ export type DogType = {
     status: string;
 };
 const App = () => {
-    const [dogBreed, setDogBreed] = useState("Chihuahua");
-
+    const [dogBreed, setDogBreed] = useState("");
+    const randomDogBreedIndex = Math.floor(
+        Math.random() * Object.keys(DogBreeds).length
+    );
     return (
         <div>
-            <button onClick={() => setDogBreed("Retriever")}>retriever</button>
+            <button onClick={() => setDogBreed("Retriever")}>Retriever</button>
             <button onClick={() => setDogBreed("Rottweiler")}>
                 Rottweiler
             </button>
@@ -18,7 +20,7 @@ const App = () => {
 
             <div>
                 <MainStage
-                    dogBreed={dogBreed}
+                    randomDogBreedIndex={randomDogBreedIndex}
                     dogBreedToQuery={DogBreeds}
                 ></MainStage>
             </div>
