@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { DogBreeds, fetchDogImg } from "./services/DogAPI";
 type MainStageProps = {
-    answerDogBreedIndex: number;
     dogBreedToQuery: { [key: string]: string };
+    onNext: (isAnswer: boolean) => void;
 };
 
 type DogImages = {
@@ -12,10 +12,18 @@ type DogImages = {
 }; //[key: string]: string[] | string }
 
 const MainStage = (props: MainStageProps) => {
+    const [curScore, setCurScore] = useState(0);
     //get random images for each category, including answer
+    const randomDogBreedGenerator = () => {
+        return Math.floor(Math.random() * Object.keys(DogBreeds).length);
+    };
+    const [answerDogBreedIndex, setAnswerDogBreedIndex] = useState(
+        randomDogBreedGenerator()
+    );
     const [dogImages, setDogImages] = useState<DogImages[]>([
         { imgLink: "", isAnswer: false, breed: "dfsdf" },
     ]);
+    const [isShowGame, setIsShowGame] = useState(false);
 
     const shuffleArray = <T extends unknown>(arrayToShuffle: T[]) => {
         const copyArrayToShuffle = arrayToShuffle.slice();
@@ -34,7 +42,7 @@ const MainStage = (props: MainStageProps) => {
 
     useEffect(() => {
         const answerDogBreed = Object.keys(props.dogBreedToQuery)[
-            props.answerDogBreedIndex
+            answerDogBreedIndex
         ];
         //getting string breeds of correct length of choices that are not the answer
         let otherChoicesDogBreeds: string[] = [];
@@ -50,29 +58,43 @@ const MainStage = (props: MainStageProps) => {
         }
 
         const tempDogImages: DogImages[] = [];
-        for (const breed of otherChoicesDogBreeds.concat(answerDogBreed)) {
-            // console.log(props.dogBreedToQuery[breed]);
-            fetchDogImg(props.dogBreedToQuery[breed])
-                .then((response) => {
-                    console.log(response.message);
-                    let curBreed = {
-                        imgLink: response.message,
-                        breed: breed,
-                        isAnswer: breed === answerDogBreed,
-                    };
-                    tempDogImages.push(curBreed);
-                    setDogImages([...tempDogImages]);
-                })
-                .catch((err) => console.log(`API issues: ${err}`));
-        }
-        // console.log(tempDogImages);
+        setTimeout(() => {
+            for (const breed of otherChoicesDogBreeds.concat(answerDogBreed)) {
+                // console.log(props.dogBreedToQuery[breed]);
+                fetchDogImg(props.dogBreedToQuery[breed])
+                    .then((response) => {
+                        console.log(response.message);
+                        let curBreed = {
+                            imgLink: response.message,
+                            breed: breed,
+                            isAnswer: breed === answerDogBreed,
+                        };
+                        setIsShowGame(true);
+                        tempDogImages.push(curBreed);
+                        setDogImages([...tempDogImages]);
+                    })
+                    .catch((err) => console.log(`API issues: ${err}`));
+            }
+        }, 1000);
 
-        console.log(dogImages);
-    }, [props.answerDogBreedIndex, props.dogBreedToQuery]);
+        // console.log(tempDogImages);
+        // return () => {
+        // setIsShowGame(false);
+        // };
+    }, [answerDogBreedIndex, props.dogBreedToQuery]);
 
     const choiceCards = dogImages.map((el) => {
         return (
-            <div key={el.imgLink} className="card">
+            <div
+                key={el.imgLink}
+                className="card"
+                onClick={() => {
+                    setAnswerDogBreedIndex(randomDogBreedGenerator());
+                    setCurScore(curScore + 25);
+                    // props.onNext(el.isAnswer);
+                    console.log(el.isAnswer);
+                }}
+            >
                 <div className="wrapper">
                     <div
                         className="card_img"
@@ -94,13 +116,26 @@ const MainStage = (props: MainStageProps) => {
     );
     */
     //choosing answer category
-    return (
+    return isShowGame ? (
         <div>
+            <div>
+                {dogImages.map((el) => {
+                    return el.breed;
+                })}
+            </div>
+            <div className="header_bar">
+                <div className="cur_score">
+                    Your score is:
+                    {` ${curScore}`}
+                </div>
+            </div>
             <div className="prompt">
                 <h2> Which picture is a {promptBreed}</h2>
             </div>
             <div className="row">{choiceCards}</div>
         </div>
+    ) : (
+        <div>Loading ... </div>
     );
     /*
     return (

@@ -5,6 +5,9 @@
   * ~~pass arguments to get specific image.~~
   * ~~Get image from rand category.~~
   * Add different breeds to different cards
+  * ~~Scoring and reloading~~
+    * ~~onClick of anycard => reload api~~
+  * 
 * Add card layout
   * Add conditional border highlight on click
 * Create mockup on figma
