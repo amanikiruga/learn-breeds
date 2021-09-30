@@ -14,7 +14,7 @@ type DogImages = {
 const MainStage = (props: MainStageProps) => {
     //get random images for each category, including answer
     const [dogImages, setDogImages] = useState<DogImages[]>([
-        { imgLink: "", isAnswer: true, breed: "dfsdf" },
+        { imgLink: "", isAnswer: false, breed: "dfsdf" },
     ]);
 
     const shuffleArray = <T extends unknown>(arrayToShuffle: T[]) => {
@@ -70,6 +70,21 @@ const MainStage = (props: MainStageProps) => {
         console.log(dogImages);
     }, [props.answerDogBreedIndex, props.dogBreedToQuery]);
 
+    const choiceCards = dogImages.map((el) => {
+        return (
+            <div key={el.imgLink} className="card">
+                <div className="wrapper">
+                    <div
+                        className="card_img"
+                        style={{ backgroundImage: `url(${el.imgLink})` }}
+                    ></div>
+                </div>
+            </div>
+        );
+    });
+
+    const promptBreed = dogImages.find((el) => el.isAnswer)?.breed || "";
+    /*
     return (
         <div>
             {dogImages.map((el) => {
@@ -77,7 +92,16 @@ const MainStage = (props: MainStageProps) => {
             })}
         </div>
     );
+    */
     //choosing answer category
+    return (
+        <div>
+            <div className="prompt">
+                <h2> Which picture is a {promptBreed}</h2>
+            </div>
+            <div className="row">{choiceCards}</div>
+        </div>
+    );
     /*
     return (
         
