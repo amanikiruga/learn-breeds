@@ -1,28 +1,86 @@
 import { useEffect, useState } from "react";
 import { DogBreeds, fetchDogImg } from "./services/DogAPI";
 type MainStageProps = {
-    randomDogBreedIndex: number;
+    answerDogBreedIndex: number;
     dogBreedToQuery: { [key: string]: string };
 };
 
+type DogImages = {
+    imgLink: string;
+    isAnswer: boolean;
+    breed: string;
+}; //[key: string]: string[] | string }
+
 const MainStage = (props: MainStageProps) => {
-    const [dogImage, setDogImage] = useState("");
+    //get random images for each category, including answer
+    const [dogImages, setDogImages] = useState<DogImages[]>([
+        { imgLink: "", isAnswer: true, breed: "dfsdf" },
+    ]);
 
-    const dogBreed =
-        props.dogBreedToQuery[
-            Object.keys(DogBreeds)[props.randomDogBreedIndex]
-        ];
+    const shuffleArray = <T extends unknown>(arrayToShuffle: T[]) => {
+        const copyArrayToShuffle = arrayToShuffle.slice();
+        for (let i = 0; i < copyArrayToShuffle.length; i++) {
+            const randIndex = Math.floor(
+                Math.random() * copyArrayToShuffle.length
+            );
 
-    console.log(dogBreed);
+            [copyArrayToShuffle[i], copyArrayToShuffle[randIndex]] = [
+                copyArrayToShuffle[randIndex],
+                copyArrayToShuffle[i],
+            ];
+        }
+        return copyArrayToShuffle;
+    };
+
     useEffect(() => {
-        fetchDogImg(dogBreed)
-            .then((response) => setDogImage(response.message))
-            .catch((err) => {
-                console.log(`We have an error in getting from API ${err}`);
-            });
-    }, [props.randomDogBreedIndex]);
+        const answerDogBreed = Object.keys(props.dogBreedToQuery)[
+            props.answerDogBreedIndex
+        ];
+        //getting string breeds of correct length of choices that are not the answer
+        let otherChoicesDogBreeds: string[] = [];
+        const lengthChoicesNotAnswer = 2;
+        for (let i = 0; i < lengthChoicesNotAnswer; i++) {
+            const curRandIndex = Math.floor(
+                Math.random() * lengthChoicesNotAnswer
+            );
+            const curBreed = Object.keys(props.dogBreedToQuery).filter(
+                (val) => val !== answerDogBreed
+            )[curRandIndex];
+            otherChoicesDogBreeds.push(curBreed);
+        }
+
+        const tempDogImages: DogImages[] = [];
+        for (const breed of otherChoicesDogBreeds.concat(answerDogBreed)) {
+            // console.log(props.dogBreedToQuery[breed]);
+            fetchDogImg(props.dogBreedToQuery[breed])
+                .then((response) => {
+                    console.log(response.message);
+                    let curBreed = {
+                        imgLink: response.message,
+                        breed: breed,
+                        isAnswer: breed === answerDogBreed,
+                    };
+                    tempDogImages.push(curBreed);
+                    setDogImages([...tempDogImages]);
+                })
+                .catch((err) => console.log(`API issues: ${err}`));
+        }
+        // console.log(tempDogImages);
+
+        console.log(dogImages);
+    }, [props.answerDogBreedIndex, props.dogBreedToQuery]);
 
     return (
+        <div>
+            {dogImages.map((el) => {
+                return el.breed;
+            })}
+        </div>
+    );
+    //choosing answer category
+    /*
+    return (
+        
         <div>
             <div className="prompt">
                 <h2> Which picture is a {dogBreed}</h2>
@@ -55,6 +113,7 @@ const MainStage = (props: MainStageProps) => {
             </div>
         </div>
     );
+    */
 };
 
 export default MainStage;

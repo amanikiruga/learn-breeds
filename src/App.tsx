@@ -20,7 +20,7 @@ const App = () => {
 
             <div>
                 <MainStage
-                    randomDogBreedIndex={randomDogBreedIndex}
+                    answerDogBreedIndex={randomDogBreedIndex}
                     dogBreedToQuery={DogBreeds}
                 ></MainStage>
             </div>
