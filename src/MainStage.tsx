@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
-import { fetchDogImg } from "./services/DogAPI";
+import { DogBreeds, fetchDogImg } from "./services/DogAPI";
 type MainStageProps = {
-    imageLink: string;
+    dogBreed: string;
+    dogBreedToQuery: { [key: string]: string };
 };
 
-const MainStage = () => {
+const MainStage = (props: MainStageProps) => {
     const [dogImage, setDogImage] = useState("");
+    console.log(props.dogBreed);
+    console.log(props.dogBreedToQuery[props.dogBreed]);
     useEffect(() => {
-        fetchDogImg().then((response) => setDogImage(response.message));
-    }, []);
+        fetchDogImg(props.dogBreedToQuery[props.dogBreed])
+            .then((response) => setDogImage(response.message))
+            .catch((err) => {
+                console.log(`We have an error in getting from API ${err}`);
+            });
+    }, [props.dogBreed]);
 
     return (
         <div>
