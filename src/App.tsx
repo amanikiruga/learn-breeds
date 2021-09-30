@@ -10,7 +10,7 @@ const App = () => {
 
     return (
         <div>
-            <button onClick={() => setDogBreed("Retriever")}>retriever</button>
+            <button onClick={() => setDogBreed("Retriever")}>Retriever</button>
             <button onClick={() => setDogBreed("Rottweiler")}>
                 Rottweiler
             </button>
