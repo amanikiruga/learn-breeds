@@ -31,6 +31,7 @@ const App = () => {
 
             <div>
                 <MainStage
+                    initialRoundTimeInSeconds={15}
                     onNext={onNext}
                     dogBreedToQuery={DogBreeds}
                 ></MainStage>

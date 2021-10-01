@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { clear } from "console";
+import { useEffect, useRef, useState } from "react";
 import { DogBreeds, fetchDogImg } from "./services/DogAPI";
 type MainStageProps = {
     dogBreedToQuery: { [key: string]: string };
     onNext: (isAnswer: boolean) => void;
+    initialRoundTimeInSeconds: number;
 };
 
 type DogImages = {
@@ -13,6 +15,14 @@ type DogImages = {
 
 const MainStage = (props: MainStageProps) => {
     const [curScore, setCurScore] = useState(0);
+    const [curTimeSeconds, setCurTimeSeconds] = useState(
+        props.initialRoundTimeInSeconds
+    );
+
+    const curTimer = useRef<NodeJS.Timeout | null>(null);
+
+    const [isRoundOn, setIsRoundOn] = useState(false);
+
     //get random images for each category, including answer
     const randomDogBreedGenerator = () => {
         return Math.floor(Math.random() * Object.keys(DogBreeds).length);
@@ -58,6 +68,7 @@ const MainStage = (props: MainStageProps) => {
         }
 
         const tempDogImages: DogImages[] = [];
+        //fetch dog images asynchronously
         setTimeout(() => {
             for (const breed of otherChoicesDogBreeds.concat(answerDogBreed)) {
                 // console.log(props.dogBreedToQuery[breed]);
@@ -69,19 +80,36 @@ const MainStage = (props: MainStageProps) => {
                             breed: breed,
                             isAnswer: breed === answerDogBreed,
                         };
+
                         setIsShowGame(true);
+                        setIsRoundOn(true);
+
                         tempDogImages.push(curBreed);
                         setDogImages([...tempDogImages]);
                     })
                     .catch((err) => console.log(`API issues: ${err}`));
             }
         }, 1000);
+    }, [curScore, answerDogBreedIndex, props.dogBreedToQuery]);
 
-        // console.log(tempDogImages);
-        // return () => {
-        // setIsShowGame(false);
-        // };
-    }, [answerDogBreedIndex, props.dogBreedToQuery]);
+    useEffect(() => {
+        if (!isRoundOn) {
+            return;
+        }
+        //create timer
+
+        const roundTimer = setTimeout(() => {
+            setCurTimeSeconds(curTimeSeconds - 1);
+            if (curTimeSeconds <= 0) {
+                setIsRoundOn(false);
+                setCurTimeSeconds(props.initialRoundTimeInSeconds);
+                clearTimeout(roundTimer);
+            }
+        }, 1000);
+        curTimer.current = roundTimer;
+        // return clearTimeout(roundTimer);
+        // return clearTimeout(roundTimer);
+    }, [props.initialRoundTimeInSeconds, curTimeSeconds, isRoundOn]);
 
     const choiceCards = dogImages.map((el) => {
         return (
@@ -91,6 +119,9 @@ const MainStage = (props: MainStageProps) => {
                 onClick={() => {
                     setAnswerDogBreedIndex(randomDogBreedGenerator());
                     setCurScore(curScore + 25);
+                    setIsRoundOn(false);
+                    setCurTimeSeconds(props.initialRoundTimeInSeconds);
+                    if (curTimer.current) clearTimeout(curTimer.current);
                     // props.onNext(el.isAnswer);
                     console.log(el.isAnswer);
                 }}
@@ -127,6 +158,9 @@ const MainStage = (props: MainStageProps) => {
                 <div className="cur_score">
                     Your score is:
                     {` ${curScore}`}
+                </div>
+                <div className="round_timer_box">
+                    {`Time: ${curTimeSeconds}`}
                 </div>
             </div>
             <div className="prompt">

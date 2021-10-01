@@ -7,7 +7,9 @@
   * Add different breeds to different cards
   * ~~Scoring and reloading~~
     * ~~onClick of anycard => reload api~~
-  * 
+  * Timer functionality 
+    * ~~make timer wait till everything is loaded.~~
+    * ~~add timer using setTimeout()~~
 * Add card layout
   * Add conditional border highlight on click
 * Create mockup on figma
