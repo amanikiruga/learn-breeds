@@ -3,6 +3,7 @@ import GameOver from "./GameOver";
 import MainStage from "./MainStage";
 import PastScores from "./PastScores";
 import { DogBreeds } from "./services/DogAPI";
+import mainLogo from "./res/learn-breeds-icon.png";
 import {
     getAllScores,
     saveScoreDatabase,
@@ -73,9 +74,9 @@ const App = () => {
         }, 1000);
         curTimer.current = timer;
     };
-    if (isGameOn)
-        return (
-            <div>
+
+    /*
+
                 <button onClick={() => setDogBreed("Retriever")}>
                     Retriever
                 </button>
@@ -85,7 +86,10 @@ const App = () => {
                 <button onClick={() => setDogBreed("Chihuahua")}>
                     Chihuahua
                 </button>
-
+    */
+    if (isGameOn)
+        return (
+            <div>
                 <div>
                     <MainStage
                         onGameOver={onGameOver}
@@ -113,10 +117,15 @@ const App = () => {
         );
     else
         return (
-            <div>
-                <h1> Learn Breeds</h1>
-                <button onClick={onRestartGame}>Start Game</button>
-                <button onClick={onShowPastScores}>Show Past Scores</button>
+            <div className="home_screen">
+                <img src={mainLogo} height={80} width={80}></img>
+                <h1 id="home_screen_heading"> Learn Breeds</h1>
+                <button className="button" onClick={onRestartGame}>
+                    Start Game
+                </button>
+                <button className="button" onClick={onShowPastScores}>
+                    Show Past Scores
+                </button>
             </div>
         );
 };

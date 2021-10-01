@@ -6,11 +6,16 @@ type GameOverProps = {
 
 const GameOver = (props: GameOverProps) => {
     return (
-        <div>
-            <p> Game Over! </p>
-            <p> Your Score Was {props.finalScore} </p>
-            <button onClick={props.onRestartGame}>Start Game</button>
-            <button onClick={props.onGoBackToHome}>Go Back to Home</button>
+        <div className="gameover_screen">
+            <div id="gameover_heading"> Game Over! </div>
+            <div id="gameover_score_description">Your Score Was:</div>
+            <div id="gameover_score_number"> {props.finalScore} </div>
+            <button className="button" onClick={props.onRestartGame}>
+                Try Again
+            </button>
+            <button className="button" onClick={props.onGoBackToHome}>
+                Go Back to Home
+            </button>
         </div>
     );
 };

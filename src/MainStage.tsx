@@ -107,7 +107,7 @@ const MainStage = (props: MainStageProps) => {
                 setIsRoundOn(false);
 
                 clearTimeout(roundTimer);
-                onGameOver(curScore);
+                // onGameOver(curScore);
             }
         }, 1000);
         curTimer.current = roundTimer;
@@ -167,18 +167,20 @@ const MainStage = (props: MainStageProps) => {
                 })}
             </div>
             <div className="header_bar">
-                <div className="cur_score">
-                    Your score is:
-                    {` ${curScore}`}
+                <div className="header_item" id="cur_score">
+                    Score:
+                    <strong> {` ${curScore}`} </strong>
                 </div>
-                <div className="round_timer_box">
+                <div className="header_item" id="round_timer_box">
                     {`Time: ${curTimeSeconds}`}
                 </div>
             </div>
-            <div className="prompt">
-                <h2> Which picture is a {promptBreed}</h2>
+            <div className="main_screen">
+                <div className="prompt">
+                    <h2> Which picture is a {promptBreed}</h2>
+                </div>
+                <div className="card_choices">{choiceCards}</div>
             </div>
-            <div className="row">{choiceCards}</div>
         </div>
     ) : (
         <div>Loading ... </div>
