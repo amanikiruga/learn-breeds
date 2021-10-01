@@ -29,5 +29,6 @@
 rottweiler, retriever, chihuahua
 Once game is over: 
 * show different UI screen saying Game Over, your score was x
+  * add return to home button
 * update highscore logic (your score was blah)
 * 
