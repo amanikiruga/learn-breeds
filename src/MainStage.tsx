@@ -106,7 +106,7 @@ const MainStage = (props: MainStageProps) => {
             setCurTimeSeconds(curTimeSeconds - 1);
             if (curTimeSeconds <= 0) {
                 setIsRoundOn(false);
-
+                setCurTimeSeconds(props.initialRoundTimeInSeconds);
                 clearTimeout(roundTimer);
                 onGameOver(curScore);
             }
@@ -168,13 +168,17 @@ const MainStage = (props: MainStageProps) => {
     );
     */
     //choosing answer category
-    return isShowGame ? (
-        <div>
-            <div>
+
+    //debug with dog breeds:
+    /*
+    <div>
                 {dogImages.map((el) => {
                     return el.breed;
                 })}
             </div>
+    */
+    return isShowGame ? (
+        <div>
             <div className="header_bar">
                 <div
                     className="header_item"

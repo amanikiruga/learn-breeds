@@ -128,7 +128,7 @@ const App = () => {
         return (
             <div className="home_screen">
                 <img src={mainLogo} height={80} width={80}></img>
-                <h1 id="home_screen_heading"> Learn Breeds</h1>
+                <h1 id="home_screen_heading"> Paws a Litter</h1>
                 <button className="button" onClick={onRestartGame}>
                     Start Game
                 </button>

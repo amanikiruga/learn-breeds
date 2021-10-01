@@ -35,6 +35,9 @@ code {
     transition: ease all 0.3s;
     width: 400px;
 }
+.card:hover {
+    cursor: pointer;
+}
 .wrapper {
     margin: 60px 10px 10px;
     padding: 10px;
