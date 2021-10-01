@@ -3,14 +3,13 @@ import { ScoreType } from "./services/ScoreRepo";
 type PastScoresProps = {
     pastScoresList: ScoreType[];
     onGoBackToHome: () => void;
+    onClearScores: () => void;
 };
 
 const PastScores = (props: PastScoresProps) => {
     return (
-        <div>
-            <div>
-                <h1>Past Scores</h1>
-            </div>
+        <div className="past_scores_screen">
+            <div id="past_scores_screen_heading"> Past Scores</div>
             <div>
                 <ol>
                     {props.pastScoresList.map((el) => {
@@ -18,7 +17,19 @@ const PastScores = (props: PastScoresProps) => {
                     })}
                 </ol>
             </div>
-            <button onClick={props.onGoBackToHome}>Go Back to Home</button>
+            <button
+                className="button past_scores_screen_btn"
+                onClick={props.onGoBackToHome}
+            >
+                Go Back to Home
+            </button>
+            <button
+                className="button past_scores_screen_btn"
+                id="past_scores_screen_clear_btn"
+                onClick={props.onClearScores}
+            >
+                Clear Scores
+            </button>
         </div>
     );
 };
