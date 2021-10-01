@@ -14,7 +14,7 @@ const PastScores = (props: PastScoresProps) => {
             <div>
                 <ol>
                     {props.pastScoresList.map((el) => {
-                        return <li>{el.score}</li>;
+                        return <li key={el.date}>{el.score}</li>;
                     })}
                 </ol>
             </div>

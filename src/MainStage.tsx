@@ -16,11 +16,12 @@ type DogImages = {
 }; //[key: string]: string[] | string }
 
 const MainStage = (props: MainStageProps) => {
+    const { onGameOver } = props;
     const [curScore, setCurScore] = useState(0);
     const [curTimeSeconds, setCurTimeSeconds] = useState(
         props.initialRoundTimeInSeconds
     );
-    const { onGameOver } = props;
+
     const curTimer = useRef<NodeJS.Timeout | null>(null);
 
     const [isRoundOn, setIsRoundOn] = useState(false);

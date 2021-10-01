@@ -52,6 +52,7 @@ const App = () => {
     const onShowPastScores = () => {
         if (curTimer.current) clearTimeout(curTimer.current);
         const allPastScores = getAllScores();
+
         setPastScoresList(allPastScores);
         setLatestScore(0);
         setIsGameOn(false);
