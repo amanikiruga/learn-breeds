@@ -10,6 +10,10 @@
   * Timer functionality 
     * ~~make timer wait till everything is loaded.~~
     * ~~add timer using setTimeout()~~
+* Add game UI
+  * Start screen
+  * Highscore screen
+    * save highscore to local storage 
 * Add card layout
   * Add conditional border highlight on click
 * Create mockup on figma
@@ -23,3 +27,7 @@
 
 
 rottweiler, retriever, chihuahua
+Once game is over: 
+* show different UI screen saying Game Over, your score was x
+* update highscore logic (your score was blah)
+* 
