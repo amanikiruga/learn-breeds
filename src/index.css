@@ -16,7 +16,7 @@ code {
 
 .card_choices {
     -webkit-box-sizing: border-box;
-    padding-top: 10px;
+
     box-sizing: border-box;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -46,7 +46,12 @@ code {
     -webkit-transition: ease all 0.3s;
     transition: ease all 0.3s;
 }
-
+.wrapper.answer {
+    background-color: rgb(21, 255, 0);
+}
+.wrapper.other {
+    background-color: red;
+}
 .card_img {
     background-size: cover;
     background-position: center bottom;
@@ -59,7 +64,7 @@ code {
 
 .prompt {
     text-align: center;
-    margin-top: 30px;
+    margin-top: 60px;
     font-size: larger;
 }
 
@@ -85,21 +90,45 @@ code {
 }
 
 .gameover_screen,
-.home_screen {
+.home_screen,
+.past_scores_screen {
     display: flex;
     flex-direction: column;
     margin-top: 12%;
     height: 100%;
     align-items: center;
 }
+
+.past_scores_screen {
+    align-items: stretch;
+    margin: 2% 20%;
+}
+.past_scores_screen ol {
+    list-style-type: none;
+    text-align: center;
+    border-radius: 16px;
+    background-color: #c2f6f8;
+    padding: 2% 4%;
+    margin: 10px 0px;
+}
+.past_scores_screen ol li {
+    background-color: #469da1;
+    color: white;
+    font-size: 22px;
+    padding: 5px;
+    border-radius: 16px;
+    margin: 4px 0px;
+}
 .home_screen {
     margin-top: 11%;
 }
 #gameover_heading,
-#home_screen_heading {
+#home_screen_heading,
+#past_scores_screen_heading {
     font-size: 40px;
     font-weight: bold;
     padding-bottom: 10px;
+    text-align: center;
 }
 
 #home_screen_heading {
@@ -116,16 +145,27 @@ code {
 
 .button {
     padding: 10px 15px;
-    margin: 5px;
+
     background-color: coral;
     border-style: none;
     border-radius: 5px;
     color: white;
     font-weight: bold;
     font-size: large;
+    width: 200px;
+    margin: 5px auto;
 }
 
-.button:hover {
+.button:hover,
+#header_bar_home_btn:hover {
     background-color: #db663b;
     cursor: pointer;
+}
+
+#past_scores_screen_clear_btn {
+    margin-bottom: 20px;
+}
+#header_bar_timer,
+#header_bar_score {
+    background-color: rgb(32, 190, 122);
 }

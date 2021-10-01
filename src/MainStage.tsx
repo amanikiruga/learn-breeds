@@ -7,6 +7,7 @@ type MainStageProps = {
     onNext: (isAnswer: boolean) => void;
     initialRoundTimeInSeconds: number;
     onGameOver: (curScore: number) => void;
+    onGoBackToHome: () => void;
 };
 
 type DogImages = {
@@ -138,7 +139,15 @@ const MainStage = (props: MainStageProps) => {
                     console.log(el.isAnswer);
                 }}
             >
-                <div className="wrapper">
+                <div
+                    className={`wrapper ${
+                        el.isAnswer && !isRoundOn
+                            ? "answer"
+                            : !el.isAnswer && !isRoundOn
+                            ? "other"
+                            : ""
+                    }`}
+                >
                     <div
                         className="card_img"
                         style={{ backgroundImage: `url(${el.imgLink})` }}
@@ -167,12 +176,19 @@ const MainStage = (props: MainStageProps) => {
                 })}
             </div>
             <div className="header_bar">
-                <div className="header_item" id="cur_score">
+                <div
+                    className="header_item"
+                    id="header_bar_home_btn"
+                    onClick={props.onGoBackToHome}
+                >
+                    Back to Home
+                </div>
+                <div className="header_item" id="header_bar_timer">
+                    {`Time: ${curTimeSeconds}`}
+                </div>
+                <div className="header_item" id="header_bar_score">
                     Score:
                     <strong> {` ${curScore}`} </strong>
-                </div>
-                <div className="header_item" id="round_timer_box">
-                    {`Time: ${curTimeSeconds}`}
                 </div>
             </div>
             <div className="main_screen">
