@@ -20,6 +20,7 @@ const MainStage = (props: MainStageProps) => {
     const [curTimeSeconds, setCurTimeSeconds] = useState(
         props.initialRoundTimeInSeconds
     );
+    const { onGameOver } = props;
     const curTimer = useRef<NodeJS.Timeout | null>(null);
 
     const [isRoundOn, setIsRoundOn] = useState(false);
@@ -103,14 +104,21 @@ const MainStage = (props: MainStageProps) => {
             setCurTimeSeconds(curTimeSeconds - 1);
             if (curTimeSeconds <= 0) {
                 setIsRoundOn(false);
-                setCurTimeSeconds(props.initialRoundTimeInSeconds);
+
                 clearTimeout(roundTimer);
+                onGameOver(curScore);
             }
         }, 1000);
         curTimer.current = roundTimer;
         // return clearTimeout(roundTimer);
         // return clearTimeout(roundTimer);
-    }, [props.initialRoundTimeInSeconds, curTimeSeconds, isRoundOn]);
+    }, [
+        onGameOver,
+        curScore,
+        props.initialRoundTimeInSeconds,
+        curTimeSeconds,
+        isRoundOn,
+    ]);
 
     const choiceCards = dogImages.map((el) => {
         return (
@@ -119,11 +127,12 @@ const MainStage = (props: MainStageProps) => {
                 className="card"
                 onClick={() => {
                     setAnswerDogBreedIndex(randomDogBreedGenerator());
-                    setCurScore(curScore + 25);
+
                     setIsRoundOn(false);
                     setCurTimeSeconds(props.initialRoundTimeInSeconds);
                     if (curTimer.current) clearTimeout(curTimer.current);
-                    if (!el.isAnswer) props.onGameOver(curScore);
+                    if (el.isAnswer) setCurScore(curScore + 25);
+                    else props.onGameOver(curScore);
                     // props.onNext(el.isAnswer);
                     console.log(el.isAnswer);
                 }}
