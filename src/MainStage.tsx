@@ -1,10 +1,12 @@
 import { clear } from "console";
 import { useEffect, useRef, useState } from "react";
+import GameOver from "./GameOver";
 import { DogBreeds, fetchDogImg } from "./services/DogAPI";
 type MainStageProps = {
     dogBreedToQuery: { [key: string]: string };
     onNext: (isAnswer: boolean) => void;
     initialRoundTimeInSeconds: number;
+    onGameOver: (curScore: number) => void;
 };
 
 type DogImages = {
@@ -18,7 +20,6 @@ const MainStage = (props: MainStageProps) => {
     const [curTimeSeconds, setCurTimeSeconds] = useState(
         props.initialRoundTimeInSeconds
     );
-
     const curTimer = useRef<NodeJS.Timeout | null>(null);
 
     const [isRoundOn, setIsRoundOn] = useState(false);
@@ -122,6 +123,7 @@ const MainStage = (props: MainStageProps) => {
                     setIsRoundOn(false);
                     setCurTimeSeconds(props.initialRoundTimeInSeconds);
                     if (curTimer.current) clearTimeout(curTimer.current);
+                    if (!el.isAnswer) props.onGameOver(curScore);
                     // props.onNext(el.isAnswer);
                     console.log(el.isAnswer);
                 }}
@@ -171,6 +173,7 @@ const MainStage = (props: MainStageProps) => {
     ) : (
         <div>Loading ... </div>
     );
+
     /*
     return (
         
