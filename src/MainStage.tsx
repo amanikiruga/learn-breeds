@@ -63,14 +63,14 @@ const MainStage = (props: MainStageProps) => {
         const lengthChoicesNotAnswer = 2;
         for (let i = 0; i < lengthChoicesNotAnswer; i++) {
             const curRandIndex = Math.floor(
-                Math.random() * lengthChoicesNotAnswer
+                Math.random() * (Object.keys(props.dogBreedToQuery).length - 1)
             );
             const curBreed = Object.keys(props.dogBreedToQuery).filter(
                 (val) => val !== answerDogBreed
             )[curRandIndex];
             otherChoicesDogBreeds.push(curBreed);
         }
-
+        console.log(otherChoicesDogBreeds.concat(answerDogBreed));
         const tempDogImages: DogImages[] = [];
         //fetch dog images asynchronously
         setTimeout(() => {
@@ -108,7 +108,7 @@ const MainStage = (props: MainStageProps) => {
                 setIsRoundOn(false);
 
                 clearTimeout(roundTimer);
-                // onGameOver(curScore);
+                onGameOver(curScore);
             }
         }, 1000);
         curTimer.current = roundTimer;
