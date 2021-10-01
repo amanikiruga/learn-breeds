@@ -5,6 +5,7 @@ import PastScores from "./PastScores";
 import { DogBreeds } from "./services/DogAPI";
 import mainLogo from "./res/learn-breeds-icon.png";
 import {
+    deleteAllScores,
     getAllScores,
     saveScoreDatabase,
     ScoreType,
@@ -75,6 +76,12 @@ const App = () => {
         curTimer.current = timer;
     };
 
+    const onClearScores = () => {
+        deleteAllScores();
+        const allPastScores = getAllScores();
+        setPastScoresList(allPastScores);
+    };
+
     /*
 
                 <button onClick={() => setDogBreed("Retriever")}>
@@ -92,6 +99,7 @@ const App = () => {
             <div>
                 <div>
                     <MainStage
+                        onGoBackToHome={onGoBackToHome}
                         onGameOver={onGameOver}
                         initialRoundTimeInSeconds={15}
                         onNext={onNext}
@@ -111,6 +119,7 @@ const App = () => {
     else if (showPastScores)
         return (
             <PastScores
+                onClearScores={onClearScores}
                 pastScoresList={pastScoresList}
                 onGoBackToHome={onGoBackToHome}
             ></PastScores>

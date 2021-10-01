@@ -2,8 +2,18 @@ import { DogType } from "../App";
 
 export const DogBreeds = {
     Rottweiler: "rottweiler",
-    Retriever: "retriever",
+    "Golden Retriever": "retriever/golden",
+    "Irish Terrier": "terrier/irish",
+    Labrador: "labrador",
+    Shiba: "shiba",
+    "English Springer": "springer/english",
+    "Border Collie": "collie/border",
+    Dachshund: "dachshund",
+    "Tibetan Mastiff": "mastiff/tibetan",
+    Pitbull: "pitbull",
+    "German Shepherd": "germanshepherd",
     Chihuahua: "chihuahua",
+    "Yorkshire Terrier": "terrier/yorkshire",
 };
 
 export const fetchDogImg = async (breedQuery: string): Promise<DogType> => {
