@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/learn-breeds/static/css/main.e7184404.chunk.css",
+    "main.css": "/learn-breeds/static/css/main.2e222259.chunk.css",
     "main.js": "/learn-breeds/static/js/main.0dac8b76.chunk.js",
     "main.js.map": "/learn-breeds/static/js/main.0dac8b76.chunk.js.map",
     "runtime-main.js": "/learn-breeds/static/js/runtime-main.613c2b19.js",
@@ -8,14 +8,14 @@
     "static/js/2.83ed3868.chunk.js": "/learn-breeds/static/js/2.83ed3868.chunk.js",
     "static/js/2.83ed3868.chunk.js.map": "/learn-breeds/static/js/2.83ed3868.chunk.js.map",
     "index.html": "/learn-breeds/index.html",
-    "static/css/main.e7184404.chunk.css.map": "/learn-breeds/static/css/main.e7184404.chunk.css.map",
+    "static/css/main.2e222259.chunk.css.map": "/learn-breeds/static/css/main.2e222259.chunk.css.map",
     "static/js/2.83ed3868.chunk.js.LICENSE.txt": "/learn-breeds/static/js/2.83ed3868.chunk.js.LICENSE.txt",
     "static/media/learn-breeds-icon.64e8b116.png": "/learn-breeds/static/media/learn-breeds-icon.64e8b116.png"
   },
   "entrypoints": [
     "static/js/runtime-main.613c2b19.js",
     "static/js/2.83ed3868.chunk.js",
-    "static/css/main.e7184404.chunk.css",
+    "static/css/main.2e222259.chunk.css",
     "static/js/main.0dac8b76.chunk.js"
   ]
 }
