@@ -10,6 +10,7 @@
   * Timer functionality 
     * ~~make timer wait till everything is loaded.~~
     * ~~add timer using setTimeout()~~
+* Randomize position of answer
 * Add game UI
   * ~~Start screen~~
   * Highscore screen
