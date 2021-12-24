@@ -1,10 +1,8 @@
 import { clear } from "console";
 import { useEffect, useRef, useState } from "react";
 import GameOver from "./GameOver";
-import { DogBreeds, fetchDogImg } from "./services/DogAPI";
+import { easyBreeds, hardBreeds, fetchDogImg } from "./services/DogAPI";
 type MainStageProps = {
-    dogBreedToQuery: { [key: string]: string };
-    onNext: (isAnswer: boolean) => void;
     initialRoundTimeInSeconds: number;
     onGameOver: (curScore: number) => void;
     onGoBackToHome: () => void;
@@ -22,16 +20,36 @@ const MainStage = (props: MainStageProps) => {
     const [curTimeSeconds, setCurTimeSeconds] = useState(
         props.initialRoundTimeInSeconds
     );
+    const [level, setLevel] = useState<string>("easy");
 
     const curTimer = useRef<NodeJS.Timeout | null>(null);
+    const [proportionOfEasyBreeds, setProportionOfEasyBreeds] = useState(1);
 
     const [isRoundOn, setIsRoundOn] = useState(false);
 
     //get random images for each category, including answer
+
     const randomDogBreedGenerator = () => {
-        return Math.floor(Math.random() * Object.keys(DogBreeds).length);
+        // if easy level
+
+        let isEasyChosen = false;
+        let answerBreed;
+        let otherChoicesBreeds = [];
+        const totalWeightedBreeds =
+            Object.keys(easyBreeds).length *
+                (level === "easy" ? proportionOfEasyBreeds : 0.2) +
+            Object.keys(hardBreeds).length *
+                (level === "easy" ? 1 - proportionOfEasyBreeds : 0.8);
+
+        const randomWeightedSelector = Math.random() * totalWeightedBreeds;
+        if (
+            randomWeightedSelector <
+            Object.keys(easyBreeds).length * proportionOfEasyBreeds
+        )
+            return easyBreeds;
+        else return hardBreeds;
     };
-    const [answerDogBreedIndex, setAnswerDogBreedIndex] = useState(
+    const [dogBreedsToQuery, setDogBreedsToQuery] = useState(
         randomDogBreedGenerator()
     );
     const [dogImages, setDogImages] = useState<DogImages[]>([
@@ -39,50 +57,37 @@ const MainStage = (props: MainStageProps) => {
     ]);
     const [isShowGame, setIsShowGame] = useState(false);
 
-    const shuffleArray = <T extends unknown>(arrayToShuffle: T[]) => {
-        const copyArrayToShuffle = arrayToShuffle.slice();
-        for (let i = 0; i < copyArrayToShuffle.length; i++) {
-            const randIndex = Math.floor(
-                Math.random() * copyArrayToShuffle.length
-            );
-
-            [copyArrayToShuffle[i], copyArrayToShuffle[randIndex]] = [
-                copyArrayToShuffle[randIndex],
-                copyArrayToShuffle[i],
-            ];
-        }
-        return copyArrayToShuffle;
-    };
-
     useEffect(() => {
-        const answerDogBreed = Object.keys(props.dogBreedToQuery)[
-            answerDogBreedIndex
-        ];
-        //getting string breeds of correct length of choices that are not the answer
-        let otherChoicesDogBreeds: string[] = [];
-        const lengthChoicesNotAnswer = 2;
-        for (let i = 0; i < lengthChoicesNotAnswer; i++) {
-            const curRandIndex = Math.floor(
-                Math.random() * (Object.keys(props.dogBreedToQuery).length - 1)
-            );
-            const curBreed = Object.keys(props.dogBreedToQuery).filter(
-                (val) => val !== answerDogBreed
-            )[curRandIndex];
-            otherChoicesDogBreeds.push(curBreed);
+        let temp = Object.keys(dogBreedsToQuery).slice();
+        let breedsToShow: string[] = [];
+        for (let i = 0; i < 3; i++) {
+            let curRandomIndex = Math.floor(Math.random() * temp.length);
+            let curBreed: keyof typeof dogBreedsToQuery = temp[
+                curRandomIndex
+            ] as keyof typeof dogBreedsToQuery;
+            temp = temp.filter((breed) => breed !== curBreed);
+            breedsToShow.push(curBreed);
         }
-        console.log(otherChoicesDogBreeds.concat(answerDogBreed));
+
+        const answerBreed = breedsToShow[Math.floor(Math.random() * 127) % 3];
+
         const tempDogImages: DogImages[] = [];
+        if (curScore > 0 && curScore % 85 == 0)
+            setProportionOfEasyBreeds(
+                Math.max(0, proportionOfEasyBreeds - 0.2)
+            );
         //fetch dog images asynchronously
         setTimeout(() => {
-            for (const breed of otherChoicesDogBreeds.concat(answerDogBreed)) {
-                // console.log(props.dogBreedToQuery[breed]);
-                fetchDogImg(props.dogBreedToQuery[breed])
+            for (const breed of breedsToShow) {
+                fetchDogImg(
+                    dogBreedsToQuery[breed as keyof typeof dogBreedsToQuery]
+                )
                     .then((response) => {
                         console.log(response.message);
                         let curBreed = {
                             imgLink: response.message,
                             breed: breed,
-                            isAnswer: breed === answerDogBreed,
+                            isAnswer: breed === answerBreed,
                         };
 
                         setIsShowGame(true);
@@ -94,7 +99,7 @@ const MainStage = (props: MainStageProps) => {
                     .catch((err) => console.log(`API issues: ${err}`));
             }
         }, 1000);
-    }, [curScore, answerDogBreedIndex, props.dogBreedToQuery]);
+    }, [curScore, dogBreedsToQuery, proportionOfEasyBreeds]);
 
     useEffect(() => {
         if (!isRoundOn) {
@@ -103,7 +108,7 @@ const MainStage = (props: MainStageProps) => {
         //create timer
 
         const roundTimer = setTimeout(() => {
-            setCurTimeSeconds(curTimeSeconds - 1);
+            // setCurTimeSeconds(curTimeSeconds - 1);
             if (curTimeSeconds <= 0) {
                 setIsRoundOn(false);
                 setCurTimeSeconds(props.initialRoundTimeInSeconds);
@@ -128,7 +133,7 @@ const MainStage = (props: MainStageProps) => {
                 key={el.imgLink}
                 className="card"
                 onClick={() => {
-                    setAnswerDogBreedIndex(randomDogBreedGenerator());
+                    setDogBreedsToQuery(randomDogBreedGenerator());
 
                     setIsRoundOn(false);
                     setCurTimeSeconds(props.initialRoundTimeInSeconds);
@@ -150,7 +155,10 @@ const MainStage = (props: MainStageProps) => {
                 >
                     <div
                         className="card_img"
-                        style={{ backgroundImage: `url(${el.imgLink})` }}
+                        style={{
+                            backgroundImage: `url(${el.imgLink})`,
+                            backgroundSize: "auto 100%",
+                        }}
                     ></div>
                 </div>
             </div>
