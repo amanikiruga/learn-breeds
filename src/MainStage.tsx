@@ -6,6 +6,7 @@ type MainStageProps = {
     initialRoundTimeInSeconds: number;
     onGameOver: (curScore: number) => void;
     onGoBackToHome: () => void;
+    currentLevel: string;
 };
 
 type DogImages = {
@@ -20,7 +21,6 @@ const MainStage = (props: MainStageProps) => {
     const [curTimeSeconds, setCurTimeSeconds] = useState(
         props.initialRoundTimeInSeconds
     );
-    const [level, setLevel] = useState<string>("easy");
 
     const curTimer = useRef<NodeJS.Timeout | null>(null);
     const [proportionOfEasyBreeds, setProportionOfEasyBreeds] = useState(1);
@@ -37,9 +37,11 @@ const MainStage = (props: MainStageProps) => {
         let otherChoicesBreeds = [];
         const totalWeightedBreeds =
             Object.keys(easyBreeds).length *
-                (level === "easy" ? proportionOfEasyBreeds : 0.2) +
+                (props.currentLevel === "easy" ? proportionOfEasyBreeds : 0.2) +
             Object.keys(hardBreeds).length *
-                (level === "easy" ? 1 - proportionOfEasyBreeds : 0.8);
+                (props.currentLevel === "easy"
+                    ? 1 - proportionOfEasyBreeds
+                    : 0.8);
 
         const randomWeightedSelector = Math.random() * totalWeightedBreeds;
         if (
@@ -108,7 +110,7 @@ const MainStage = (props: MainStageProps) => {
         //create timer
 
         const roundTimer = setTimeout(() => {
-            // setCurTimeSeconds(curTimeSeconds - 1);
+            setCurTimeSeconds(curTimeSeconds - 1);
             if (curTimeSeconds <= 0) {
                 setIsRoundOn(false);
                 setCurTimeSeconds(props.initialRoundTimeInSeconds);
@@ -136,7 +138,9 @@ const MainStage = (props: MainStageProps) => {
                     setDogBreedsToQuery(randomDogBreedGenerator());
 
                     setIsRoundOn(false);
-                    setCurTimeSeconds(props.initialRoundTimeInSeconds);
+                    // setCurTimeSeconds(props.initialRoundTimeInSeconds);
+                    setCurTimeSeconds(curTimeSeconds + 2);
+
                     if (curTimer.current) clearTimeout(curTimer.current);
                     if (el.isAnswer) setCurScore(curScore + 25);
                     else props.onGameOver(curScore);

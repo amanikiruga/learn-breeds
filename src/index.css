@@ -172,3 +172,30 @@ code {
 #header_bar_score {
     background-color: rgb(32, 190, 122);
 }
+.level-selector {
+    font-size: large;
+}
+.level {
+    display: inline-block;
+    padding-top: 10px;
+
+    padding-bottom: 16px;
+}
+.easy {
+    cursor: pointer;
+    padding-left: 10px;
+    padding-right: 3px;
+}
+.hard {
+    cursor: pointer;
+    padding-left: 3px;
+
+    z-index: 10000;
+}
+.chosen-level {
+    background-image: url("https://image.flaticon.com/icons/png/512/64/64431.png");
+    background-position: 62% 1.65em;
+    background-size: 27%;
+
+    background-repeat: no-repeat;
+}

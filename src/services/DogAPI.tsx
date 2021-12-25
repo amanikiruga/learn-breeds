@@ -1,20 +1,5 @@
 import { DogType } from "../App";
 
-export const DogBreeds = {
-    Rottweiler: "rottweiler",
-    "Golden Retriever": "retriever/golden",
-    "Irish Terrier": "terrier/irish",
-    Labrador: "labrador",
-    Shiba: "shiba",
-    "English Springer": "springer/english",
-    "Border Collie": "collie/border",
-    Dachshund: "dachshund",
-    "Tibetan Mastiff": "mastiff/tibetan",
-    Pitbull: "pitbull",
-    "German Shepherd": "germanshepherd",
-    Chihuahua: "chihuahua",
-    "Yorkshire Terrier": "terrier/yorkshire",
-};
 export const easyBreeds = {
     Chihuahua: "chihuahua",
     "Labrador Retriever": "labrador",
@@ -27,12 +12,12 @@ export const easyBreeds = {
     Dachshund: "dachshund",
     "Golden Retriever": "retriever/golden",
     "English Bulldog": "bulldog/english",
-    "Shih Tzu": "shihzu",
+    "Shih Tzu": "shihtzu",
     "West Highland White Terrier": "terrier/westhighland",
     "French Bulldog": "bulldog/french",
     "Cardigan Welsh Corgi": "corgi/cardigan",
     "English Springer Spaniel": "springer/english",
-    Dalmatian: "dalmatian",
+    // Dalmatian: "dalmatian", // only showing two different images
     "Great Dane": "dane/great",
     Beagle: "beagle",
     "Cocker Spaniel": "spaniel/cocker",

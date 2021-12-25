@@ -36,4 +36,16 @@ Once game is over:
 * show different UI screen saying Game Over, your score was x
   * add return to home button
 * update highscore logic (your score was blah)
+
+~~local storage~~
+authd
+* personal best 
+  * saved to firestore 
+  * shown to user
+  * 
 * 
+* past scores saved  - state 
+* highscore attached to uuid saved to firestore 
+* reload - start afresh
+* close - highscore kept
+
