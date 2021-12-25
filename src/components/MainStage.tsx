@@ -65,11 +65,14 @@ const MainStage = (props: MainStageProps) => {
     ]);
     const [isShowGame, setIsShowGame] = useState(false);
 
+    //fetching random dog breed images before a round begins
     useEffect(() => {
         let temp = Object.keys(dogBreedsToQuery).slice();
         let breedsToShow: string[] = [];
         for (let i = 0; i < 3; i++) {
-            let curRandomIndex = Math.floor(Math.random() * temp.length);
+            let curRandomIndex = Math.floor(
+                (Math.random() * 127) % temp.length
+            );
             let curBreed: keyof typeof dogBreedsToQuery = temp[
                 curRandomIndex
             ] as keyof typeof dogBreedsToQuery;
@@ -109,6 +112,7 @@ const MainStage = (props: MainStageProps) => {
         }, 1000);
     }, [curScore, dogBreedsToQuery, proportionOfEasyBreeds]);
 
+    //updating game variables and calling game over if time runs out
     useEffect(() => {
         if (!isRoundOn) {
             return;
@@ -176,25 +180,7 @@ const MainStage = (props: MainStageProps) => {
     });
 
     const promptBreed = dogImages.find((el) => el.isAnswer)?.breed || "";
-    /*
-    return (
-        <div>
-            {dogImages.map((el) => {
-                return el.breed;
-            })}
-        </div>
-    );
-    */
-    //choosing answer category
 
-    //debug with dog breeds:
-    /*
-    <div>
-                {dogImages.map((el) => {
-                    return el.breed;
-                })}
-            </div>
-    */
     return isShowGame ? (
         <div>
             <div className="header_bar">
@@ -223,43 +209,6 @@ const MainStage = (props: MainStageProps) => {
     ) : (
         <div>Loading ... </div>
     );
-
-    /*
-    return (
-        
-        <div>
-            <div className="prompt">
-                <h2> Which picture is a {dogBreed}</h2>
-            </div>
-            <div className="row">
-                <div className="card">
-                    <div className="wrapper">
-                        <div
-                            className="card_img"
-                            style={{ backgroundImage: `url(${dogImage})` }}
-                        ></div>
-                    </div>
-                </div>
-                <div className="card">
-                    <div className="wrapper">
-                        <div
-                            className="card_img"
-                            style={{ backgroundImage: `url(${dogImage})` }}
-                        ></div>
-                    </div>
-                </div>
-                <div className="card">
-                    <div className="wrapper">
-                        <div
-                            className="card_img"
-                            style={{ backgroundImage: `url(${dogImage})` }}
-                        ></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-    */
 };
 
 export default MainStage;
