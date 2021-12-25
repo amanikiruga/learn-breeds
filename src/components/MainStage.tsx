@@ -8,7 +8,6 @@ type MainStageProps = {
     onGameOver: (curScore: number) => void;
     onGoBackToHome: () => void;
     currentLevel: string;
-    handleScore: (score: number) => void;
 };
 
 type DogImages = {
@@ -28,6 +27,11 @@ const MainStage = (props: MainStageProps) => {
     const [proportionOfEasyBreeds, setProportionOfEasyBreeds] = useState(1);
 
     const [isRoundOn, setIsRoundOn] = useState(false);
+    const handleGoBackToHome = () => {
+        setIsRoundOn(false);
+        onGameOver(0);
+        props.onGoBackToHome();
+    };
 
     //get random images for each category, including answer
 
@@ -197,7 +201,7 @@ const MainStage = (props: MainStageProps) => {
                 <div
                     className="header_item"
                     id="header_bar_home_btn"
-                    onClick={props.onGoBackToHome}
+                    onClick={handleGoBackToHome}
                 >
                     Back to Home
                 </div>

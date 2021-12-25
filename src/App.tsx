@@ -13,6 +13,8 @@ import {
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -30,14 +32,17 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const appFB = initializeApp(firebaseConfig);
-const analytics = getAnalytics(appFB);
-import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth";
-
+// const analytics = getAnalytics(appFB);
+const db = getFirestore();
 const auth = getAuth();
 
 export type DogType = {
     message: string;
     status: string;
+};
+type PersonalBest = {
+    easy: number;
+    hard: number;
 };
 const App = () => {
     const [isGameOn, setIsGameOn] = useState(false);
@@ -48,7 +53,10 @@ const App = () => {
     const [currentLevel, setCurrentLevel] = useState("easy"); //easy or hard
     const curTimer = useRef<NodeJS.Timeout | null>(null);
     const [isSignedn, setIsSignedIn] = useState(false); //signed in or not
-    const [personalBest, setPersonalBest] = useState(0); //personal best score
+    const [personalBest, setPersonalBest] = useState<PersonalBest>({
+        easy: 0,
+        hard: 0,
+    }); //personal best score
     const [uuid, setUuid] = useState("");
 
     //sign in users anonymously
@@ -74,9 +82,7 @@ const App = () => {
             const errorMessage = error.message;
             // ...
         });
-    const handleScore = (score: number) => {
-        setPersonalBest(Math.max(score, personalBest));
-    };
+
     const onRestartGame = () => {
         if (curTimer.current) clearTimeout(curTimer.current);
         setLatestScore(0);
@@ -102,14 +108,28 @@ const App = () => {
         setShowPastScores(true);
     };
     const onGameOver = (curScore: number) => {
-        const timer = setTimeout(() => {
+        const timer = setTimeout(async () => {
             setLatestScore(curScore);
+            let curDate = new Date().toISOString();
+
+            if (currentLevel == "easy")
+                setPersonalBest({
+                    ...personalBest,
+                    easy: Math.max(curScore, personalBest.easy),
+                });
+            else
+                setPersonalBest({
+                    ...personalBest,
+                    hard: Math.max(curScore, personalBest.hard),
+                });
             let latestScore = {
-                score: curScore,
-                date: new Date().toISOString(),
+                "highscore-easy": personalBest.easy,
+                "highscore-hard": personalBest.hard,
+                date: curDate,
             };
-            setPersonalBest(Math.max(curScore, personalBest));
-            saveScoreDatabase(latestScore);
+            //save score to firebase
+            if (uuid) await setDoc(doc(db, "users", uuid), latestScore);
+
             setIsGameOn(false);
             setShowGameOver(true);
             setShowPastScores(false);
@@ -128,7 +148,6 @@ const App = () => {
             <div>
                 <div>
                     <MainStage
-                        handleScore={handleScore}
                         onGoBackToHome={onGoBackToHome}
                         onGameOver={onGameOver}
                         initialRoundTimeInSeconds={15}

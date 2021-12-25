@@ -49,3 +49,5 @@ authd
 * reload - start afresh
 * close - highscore kept
 
+Pre-publish checklist
+[] Have removed debug statements like console.log 
