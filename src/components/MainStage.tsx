@@ -1,12 +1,14 @@
 import { clear } from "console";
 import { useEffect, useRef, useState } from "react";
 import GameOver from "./GameOver";
-import { easyBreeds, hardBreeds, fetchDogImg } from "./services/DogAPI";
+import { easyBreeds, hardBreeds, fetchDogImg } from "./../services/DogAPI";
+
 type MainStageProps = {
     initialRoundTimeInSeconds: number;
     onGameOver: (curScore: number) => void;
     onGoBackToHome: () => void;
     currentLevel: string;
+    handleScore: (score: number) => void;
 };
 
 type DogImages = {

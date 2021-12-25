@@ -1,4 +1,4 @@
-import { ScoreType } from "./services/ScoreRepo";
+import { ScoreType } from "./../services/ScoreRepo";
 
 type PastScoresProps = {
     pastScoresList: ScoreType[];
