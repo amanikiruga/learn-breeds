@@ -51,3 +51,12 @@ authd
 
 Pre-publish checklist
 [] Have removed debug statements like console.log 
+
+when round is over - fetch new images 
+
+showGame - whether to show game or not 
+isRoundOn - 
+
+Bugs
+* timer starts before all dogs are on the page 
+* Reloading removes stats 

@@ -94,7 +94,7 @@ code {
 
 .gameover_screen,
 .home_screen,
-.past_scores_screen {
+.high_scores_screen {
     display: flex;
     flex-direction: column;
     margin-top: 12%;
@@ -102,11 +102,11 @@ code {
     align-items: center;
 }
 
-.past_scores_screen {
+.high_scores_screen {
     align-items: stretch;
     margin: 2% 20%;
 }
-.past_scores_screen ol {
+.high_scores_screen ol {
     list-style-type: none;
     text-align: center;
     border-radius: 16px;
@@ -114,7 +114,7 @@ code {
     padding: 2% 4%;
     margin: 10px 0px;
 }
-.past_scores_screen ol li {
+.high_scores_screen ol li {
     background-color: #469da1;
     color: white;
     font-size: 22px;
@@ -127,7 +127,7 @@ code {
 }
 #gameover_heading,
 #home_screen_heading,
-#past_scores_screen_heading {
+#high_scores_screen_heading {
     font-size: 40px;
     font-weight: bold;
     padding-bottom: 10px;
@@ -160,12 +160,13 @@ code {
 }
 
 .button:hover,
+#high-scores-level-selectors button.active,
 #header_bar_home_btn:hover {
     background-color: #db663b;
     cursor: pointer;
 }
 
-#past_scores_screen_clear_btn {
+#high_scores_screen_clear_btn {
     margin-bottom: 20px;
 }
 #header_bar_timer,
@@ -198,4 +199,56 @@ code {
     background-size: 27%;
 
     background-repeat: no-repeat;
+}
+.username {
+    font-size: 20px;
+    font-weight: bold;
+    padding-bottom: 10px;
+    text-align: center;
+}
+.username input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #c2f6f8;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    color: #469da1;
+}
+#high-scores-level-selectors {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 20px 50px 0px 50px;
+}
+.high_scores_list {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* styling highscores table */
+tbody {
+    background-color: #c2f6f8;
+}
+th {
+    padding: 2px 0;
+}
+td {
+    padding: 10px;
+    border: 1px solid transparent;
+
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    color: #469da1;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0px auto;
 }

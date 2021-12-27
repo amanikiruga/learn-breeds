@@ -1,5 +1,5 @@
 import { clear } from "console";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import GameOver from "./GameOver";
 import { easyBreeds, hardBreeds, fetchDogImg } from "./../services/DogAPI";
 
@@ -35,7 +35,7 @@ const MainStage = (props: MainStageProps) => {
 
     //get random images for each category, including answer
 
-    const randomDogBreedGenerator = () => {
+    const randomDogBreedGenerator = useCallback(() => {
         // if easy level
 
         let isEasyChosen = false;
@@ -56,37 +56,42 @@ const MainStage = (props: MainStageProps) => {
         )
             return easyBreeds;
         else return hardBreeds;
-    };
-    const [dogBreedsToQuery, setDogBreedsToQuery] = useState(
-        randomDogBreedGenerator()
-    );
+    }, [proportionOfEasyBreeds, props.currentLevel]);
+
     const [dogImages, setDogImages] = useState<DogImages[]>([
         { imgLink: "", isAnswer: false, breed: "dfsdf" },
     ]);
     const [isShowGame, setIsShowGame] = useState(false);
+    const updateProportions = () => {
+        if (curScore > 0 && curScore % 85 == 0)
+            setProportionOfEasyBreeds(
+                Math.max(0, proportionOfEasyBreeds - 0.2)
+            );
+    };
 
     //fetching random dog breed images before a round begins
     useEffect(() => {
+        if (isRoundOn) return; //if round is on, do not fetch images
+        let dogBreedsToQuery = randomDogBreedGenerator();
+
         let temp = Object.keys(dogBreedsToQuery).slice();
         let breedsToShow: string[] = [];
+        let tempRandoms: number[] = [];
         for (let i = 0; i < 3; i++) {
-            let curRandomIndex = Math.floor(
-                (Math.random() * 127) % temp.length
-            );
+            let tempRandom = Math.random() * temp.length;
+            let curRandomIndex = Math.floor(tempRandom);
+            tempRandoms.push(tempRandom);
             let curBreed: keyof typeof dogBreedsToQuery = temp[
                 curRandomIndex
             ] as keyof typeof dogBreedsToQuery;
             temp = temp.filter((breed) => breed !== curBreed);
             breedsToShow.push(curBreed);
         }
-
+        console.log("breedsToShow", breedsToShow, tempRandoms);
         const answerBreed = breedsToShow[Math.floor(Math.random() * 127) % 3];
 
         const tempDogImages: DogImages[] = [];
-        if (curScore > 0 && curScore % 85 == 0)
-            setProportionOfEasyBreeds(
-                Math.max(0, proportionOfEasyBreeds - 0.2)
-            );
+
         //fetch dog images asynchronously
         setTimeout(() => {
             for (const breed of breedsToShow) {
@@ -110,7 +115,7 @@ const MainStage = (props: MainStageProps) => {
                     .catch((err) => console.log(`API issues: ${err}`));
             }
         }, 1000);
-    }, [curScore, dogBreedsToQuery, proportionOfEasyBreeds]);
+    }, [curScore, randomDogBreedGenerator]);
 
     //updating game variables and calling game over if time runs out
     useEffect(() => {
@@ -145,12 +150,10 @@ const MainStage = (props: MainStageProps) => {
                 key={el.imgLink}
                 className="card"
                 onClick={() => {
-                    setDogBreedsToQuery(randomDogBreedGenerator());
-
                     setIsRoundOn(false);
                     // setCurTimeSeconds(props.initialRoundTimeInSeconds);
                     setCurTimeSeconds(curTimeSeconds + 2);
-
+                    updateProportions(); //update proportions
                     if (curTimer.current) clearTimeout(curTimer.current);
                     if (el.isAnswer) setCurScore(curScore + 25);
                     else props.onGameOver(curScore);

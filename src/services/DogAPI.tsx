@@ -129,7 +129,7 @@ export const hardBreeds = {
     "Blenheim Spaniel": "spaniel/blenheim",
     "Brittany Spaniel": "spaniel/brittany",
 
-    "Irish Water Spaniel": "spaniel/irishwater",
+    "Irish Water Spaniel": "spaniel/irish",
     "Japanese Spaniel": "spaniel/japanese",
     "Sussex Spaniel": "spaniel/sussex",
     "Welsh Springer Spaniel": "spaniel/welshspringer",
