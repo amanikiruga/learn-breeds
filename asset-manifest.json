@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/learn-breeds/static/css/main.8f3d6f47.chunk.css",
-    "main.js": "/learn-breeds/static/js/main.5331038f.chunk.js",
-    "main.js.map": "/learn-breeds/static/js/main.5331038f.chunk.js.map",
+    "main.css": "/learn-breeds/static/css/main.200f6e29.chunk.css",
+    "main.js": "/learn-breeds/static/js/main.a4ba3b9b.chunk.js",
+    "main.js.map": "/learn-breeds/static/js/main.a4ba3b9b.chunk.js.map",
     "runtime-main.js": "/learn-breeds/static/js/runtime-main.613c2b19.js",
     "runtime-main.js.map": "/learn-breeds/static/js/runtime-main.613c2b19.js.map",
     "static/js/2.537eb3f8.chunk.js": "/learn-breeds/static/js/2.537eb3f8.chunk.js",
     "static/js/2.537eb3f8.chunk.js.map": "/learn-breeds/static/js/2.537eb3f8.chunk.js.map",
     "index.html": "/learn-breeds/index.html",
-    "static/css/main.8f3d6f47.chunk.css.map": "/learn-breeds/static/css/main.8f3d6f47.chunk.css.map",
+    "static/css/main.200f6e29.chunk.css.map": "/learn-breeds/static/css/main.200f6e29.chunk.css.map",
     "static/js/2.537eb3f8.chunk.js.LICENSE.txt": "/learn-breeds/static/js/2.537eb3f8.chunk.js.LICENSE.txt",
     "static/media/learn-breeds-icon.64e8b116.png": "/learn-breeds/static/media/learn-breeds-icon.64e8b116.png"
   },
   "entrypoints": [
     "static/js/runtime-main.613c2b19.js",
     "static/js/2.537eb3f8.chunk.js",
-    "static/css/main.8f3d6f47.chunk.css",
-    "static/js/main.5331038f.chunk.js"
+    "static/css/main.200f6e29.chunk.css",
+    "static/js/main.a4ba3b9b.chunk.js"
   ]
 }
