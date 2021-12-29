@@ -87,7 +87,7 @@ const MainStage = (props: MainStageProps) => {
             temp = temp.filter((breed) => breed !== curBreed);
             breedsToShow.push(curBreed);
         }
-        console.log("breedsToShow", breedsToShow, tempRandoms);
+        // console.log("breedsToShow", breedsToShow, tempRandoms);
         const answerBreed = breedsToShow[Math.floor(Math.random() * 127) % 3];
 
         const tempDogImages: DogImages[] = [];
@@ -99,7 +99,7 @@ const MainStage = (props: MainStageProps) => {
                     dogBreedsToQuery[breed as keyof typeof dogBreedsToQuery]
                 )
                     .then((response) => {
-                        console.log(response.message);
+                        // console.log(response.message);
                         let curBreed = {
                             imgLink: response.message,
                             breed: breed,
@@ -125,7 +125,7 @@ const MainStage = (props: MainStageProps) => {
         //create timer
 
         const roundTimer = setTimeout(() => {
-            setCurTimeSeconds(curTimeSeconds - 1);
+            // setCurTimeSeconds(curTimeSeconds - 1);
             if (curTimeSeconds <= 0) {
                 setIsRoundOn(false);
                 setCurTimeSeconds(props.initialRoundTimeInSeconds);
@@ -158,7 +158,7 @@ const MainStage = (props: MainStageProps) => {
                     if (el.isAnswer) setCurScore(curScore + 25);
                     else props.onGameOver(curScore);
                     // props.onNext(el.isAnswer);
-                    console.log(el.isAnswer);
+                    // console.log(el.isAnswer);
                 }}
             >
                 <div

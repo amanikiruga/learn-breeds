@@ -158,7 +158,7 @@ const App = () => {
                     curUserList.push(doc.data() as UserType);
                 });
                 setUserList(curUserList);
-                console.log(curUserList);
+                // console.log(curUserList);
             })
             .catch((error) => {
                 console.log(error);
@@ -172,7 +172,7 @@ const App = () => {
             "highscore-easy": personalBest.easy,
             "highscore-hard": personalBest.hard,
         };
-        console.log("this is the uuid", uuid);
+        // console.log("this is the uuid", uuid);
         //save score to firebase
         const saveScore = async () => {
             if (uuid)

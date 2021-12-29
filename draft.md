@@ -60,3 +60,20 @@ isRoundOn -
 Bugs
 * timer starts before all dogs are on the page 
 * Reloading removes stats 
+
+* add persistence 
+```js
+enableIndexedDbPersistence(db).catch((err) => {
+    if (err.code == "failed-precondition") {
+        console.log("failed-precondition");
+        // Multiple tabs open, persistence can only be enabled
+        // in one tab at a a time.
+        // ...
+    } else if (err.code == "unimplemented") {
+        console.log("unimplemented");
+        // The current browser does not support all of the
+        // features required to enable persistence
+        // ...
+    }
+});
+```
