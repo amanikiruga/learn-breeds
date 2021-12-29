@@ -125,7 +125,7 @@ const MainStage = (props: MainStageProps) => {
         //create timer
 
         const roundTimer = setTimeout(() => {
-            // setCurTimeSeconds(curTimeSeconds - 1);
+            setCurTimeSeconds(curTimeSeconds - 1);
             if (curTimeSeconds <= 0) {
                 setIsRoundOn(false);
                 setCurTimeSeconds(props.initialRoundTimeInSeconds);
