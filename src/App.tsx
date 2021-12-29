@@ -67,6 +67,7 @@ const App = () => {
     const [userList, setUserList] = useState<UserType[]>([]);
     const [showHighScores, setShowHighScores] = useState(false);
     const [latestScore, setLatestScore] = useState(0);
+    const [isTimeUp, setIsTimeUp] = useState(false);
     const [currentLevel, setCurrentLevel] = useState("easy"); //easy or hard
     const [highScoreLevel, setHighScoreLevel] = useState<"easy" | "hard">(
         "easy"
@@ -124,6 +125,7 @@ const App = () => {
 
     const onRestartGame = () => {
         if (curTimer.current) clearTimeout(curTimer.current);
+        setIsTimeUp(false);
         setLatestScore(0);
         setIsGameOn(true);
         setShowGameOver(false);
@@ -132,6 +134,7 @@ const App = () => {
     const onGoBackToHome = () => {
         if (curTimer.current) clearTimeout(curTimer.current);
         setLatestScore(0);
+        setIsTimeUp(false);
         setIsGameOn(false);
         setShowGameOver(false);
         setShowHighScores(false);
@@ -139,6 +142,7 @@ const App = () => {
     const onShowHighScores = () => {
         if (curTimer.current) clearTimeout(curTimer.current);
         setLatestScore(0);
+        setIsTimeUp(false);
         setIsGameOn(false);
         setShowGameOver(false);
         setShowHighScores(true);
@@ -216,6 +220,7 @@ const App = () => {
                         onGoBackToHome={onGoBackToHome}
                         onGameOver={onGameOver}
                         initialRoundTimeInSeconds={15}
+                        setIsTimeUp={setIsTimeUp}
                         currentLevel={currentLevel}
                     ></MainStage>
                 </div>
@@ -224,6 +229,7 @@ const App = () => {
     else if (showGameOver)
         return (
             <GameOver
+                isTimeUp={isTimeUp}
                 finalScore={latestScore}
                 onRestartGame={onRestartGame}
                 onGoBackToHome={onGoBackToHome}
@@ -247,7 +253,7 @@ const App = () => {
                     height={80}
                     width={80}
                 ></img>
-                <h1 id="home_screen_heading"> Paws a Litter</h1>
+                <h1 id="home_screen_heading"> Pick a Paw</h1>
                 <div className="username">
                     <input
                         type="text"

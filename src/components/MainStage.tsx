@@ -8,6 +8,7 @@ type MainStageProps = {
     onGameOver: (curScore: number) => void;
     onGoBackToHome: () => void;
     currentLevel: string;
+    setIsTimeUp: (isTimeUp: boolean) => void;
 };
 
 type DogImages = {
@@ -127,6 +128,7 @@ const MainStage = (props: MainStageProps) => {
         const roundTimer = setTimeout(() => {
             setCurTimeSeconds(curTimeSeconds - 1);
             if (curTimeSeconds <= 0) {
+                props.setIsTimeUp(true);
                 setIsRoundOn(false);
                 setCurTimeSeconds(props.initialRoundTimeInSeconds);
                 clearTimeout(roundTimer);
