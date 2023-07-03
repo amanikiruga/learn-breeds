@@ -120,14 +120,14 @@ const MainStage = (props: MainStageProps) => {
     //create timer
 
     const roundTimer = setTimeout(() => {
-      //   setCurTimeSeconds(curTimeSeconds - 1);
-      //   if (curTimeSeconds <= 0) {
-      //     props.setIsTimeUp(true);
-      //     setIsRoundOn(false);
-      //     setCurTimeSeconds(props.initialRoundTimeInSeconds);
-      //     clearTimeout(roundTimer);
-      //     onGameOver(curScore);
-      //   }
+      setCurTimeSeconds(curTimeSeconds - 1);
+      if (curTimeSeconds <= 0) {
+        props.setIsTimeUp(true);
+        setIsRoundOn(false);
+        setCurTimeSeconds(props.initialRoundTimeInSeconds);
+        clearTimeout(roundTimer);
+        onGameOver(curScore);
+      }
     }, 1000);
     curTimer.current = roundTimer;
     // return clearTimeout(roundTimer);
