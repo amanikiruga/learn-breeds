@@ -205,7 +205,7 @@ code {
     z-index: 10000;
 }
 .chosen-level {
-    background-image: url("https://image.flaticon.com/icons/png/512/64/64431.png");
+    background-image: url("res/paw-selector.png");
     background-position: 62% 1.65em;
     background-size: 27%;
 
