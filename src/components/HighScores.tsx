@@ -54,12 +54,14 @@ const HighScores = (props: HighScoresProps) => {
           <tbody>
             {props.userList.map((el, idx) => {
               return (
-                <tr key={el.uuid}>
-                  <td>{idx + 1}.</td>
-                  <td>{el.username || "Nameless"}</td>
-                  <td>{el[`highscore-${props.highScoreLevel}`]}</td>
-                  <td>{new Date(el.lastUpdated).toLocaleDateString()}</td>
-                </tr>
+                el.username.trim() && (
+                  <tr key={el.uuid}>
+                    <td>{idx + 1}.</td>
+                    <td>{el.username}</td>
+                    <td>{el[`highscore-${props.highScoreLevel}`]}</td>
+                    <td>{new Date(el.lastUpdated).toLocaleDateString()}</td>
+                  </tr>
+                )
               );
             })}
           </tbody>
