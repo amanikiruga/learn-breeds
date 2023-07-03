@@ -14,24 +14,34 @@ const HighScores = (props: HighScoresProps) => {
       <div id="high_scores_screen_heading"> High Scores</div>
 
       <div className="high_scores_list">
+        <button
+          className="button high_scores_screen_btn"
+          onClick={props.onGoBackToHome}
+        >
+          Go Back to Home
+        </button>
         <table>
           <thead>
             <tr>
               <th>Rank</th>
               <th>Username</th>
               <th>
-                Score{" "}
+                Score:{" "}
                 <div
-                  className={`level easy ${
-                    props.highScoreLevel === "easy" ? "chosen-level" : ""
+                  className={`level-highscore easy ${
+                    props.highScoreLevel === "easy"
+                      ? "chosen-level-highscore"
+                      : ""
                   }`}
                   onClick={() => props.setHighScoreLevel("easy")}
                 >
                   Easy
                 </div>
                 <div
-                  className={`level hard ${
-                    props.highScoreLevel === "hard" ? "chosen-level" : ""
+                  className={`level-highscore hard ${
+                    props.highScoreLevel === "hard"
+                      ? "chosen-level-highscore"
+                      : ""
                   }`}
                   onClick={() => props.setHighScoreLevel("hard")}
                 >
@@ -55,13 +65,6 @@ const HighScores = (props: HighScoresProps) => {
           </tbody>
         </table>
       </div>
-
-      <button
-        className="button high_scores_screen_btn"
-        onClick={props.onGoBackToHome}
-      >
-        Go Back to Home
-      </button>
     </div>
   );
 };
